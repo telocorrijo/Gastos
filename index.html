@@ -5,71 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario de Restar</title>
   <style>
-
-    @media (min-width: 430px) and (max-width: 932px) {
-
     body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        background-image: url(jimin);
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center; 
-        margin: 0;
-    }
-
-    form {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 10px 10px 10px rgb(0, 0, 0);
+      font-family: Arial, sans-serif;
       padding: 20px;
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
+      background-color: #f4f4f9;
     }
-
-    p {
-      font-size: 1.2rem; 
-      margin-bottom: 15px;
+    form {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      margin: auto;
     }
-
-    input[type="number"] {
-      width: 320px;
-      padding: 15px;
-      font-size: 1.2rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin-bottom: 15px;
-    }
-
-    button {
+    input, button {
       width: 100%;
-      padding: 15px;
-      font-size: 1.2rem;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #4CAF50;
       color: white;
-      background-color: #007BFF;
-      border: none;
-      border-radius: 5px;
       cursor: pointer;
     }
-
     button:hover {
-      background-color: #0056b3;
+      background-color: #45a049;
     }
-
+    p {
+      font-size: 16px;
+    }
     #resultado {
-      font-size: 1.5rem;
       font-weight: bold;
-      color: #333;
-      width: 320px;
-      height: 30px;
-      background-color: #0056b3;
     }
+    .error {
+      color: red;
     }
   </style>
 </head>
@@ -80,28 +51,40 @@
     <input type="number" id="resta" placeholder="Número para restar" />
     <button type="button" id="btn-restar">Restar</button>
     <p>Resultado: <span id="resultado"></span></p>
+    <p id="error-message" class="error"></p>
   </form>
 
   <script>
-    var spanDineroActual = document.getElementById('dinero-actual');
-    var inputResta = document.getElementById('resta');
-    var btnRestar = document.getElementById('btn-restar');
-    var spanResultado = document.getElementById('resultado');
+    function esIphone13ProMax() {
+      return (screen.width === 430 && screen.height === 932);
+    }
 
-    btnRestar.addEventListener('click', () => {
-      var dineroActual = parseFloat(spanDineroActual.textContent);
-      var numeroRestar = parseFloat(inputResta.value);
+    if (!esIphone13ProMax()) {
+      document.body.innerHTML = '<p>Esta página solo es accesible desde un iPhone 13 Pro Max.</p>';
+    } else {
+      var spanDineroActual = document.getElementById('dinero-actual');
+      var inputResta = document.getElementById('resta');
+      var btnRestar = document.getElementById('btn-restar');
+      var spanResultado = document.getElementById('resultado');
+      var errorMessage = document.getElementById('error-message');
 
-      if (isNaN(numeroRestar)) {
-        spanResultado.innerHTML = '<br>Número mal ponido titi.';
-        return;
-      }
+      btnRestar.addEventListener('click', () => {
+        var dineroActual = parseFloat(spanDineroActual.textContent);
+        var numeroRestar = parseFloat(inputResta.value);
 
-      var resultado = dineroActual - numeroRestar;
+        errorMessage.textContent = ''; 
 
-      spanResultado.textContent = resultado;
-      spanDineroActual.textContent = resultado;
-    });
+        if (isNaN(numeroRestar) || inputResta.value === '') {
+          errorMessage.textContent = 'Por favor ingrese un número válido.';
+          return;
+        }
+
+        var resultado = dineroActual - numeroRestar;
+
+        spanResultado.textContent = resultado;
+        spanDineroActual.textContent = resultado;
+      });
+    }
   </script>
 
 </body>
