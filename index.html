@@ -55,10 +55,12 @@
   </form>
 
   <script>
+    // Función para verificar si el dispositivo es el iPhone 13 Pro Max
     function esIphone13ProMax() {
-      return (screen.width === 430 && screen.height === 932);
+      return (screen.width === 400 && 500 && screen.height === 900 && 1000); // Resolución específica
     }
 
+    // Si no es iPhone 13 Pro Max, redirige a otra página o muestra un mensaje
     if (!esIphone13ProMax()) {
       document.body.innerHTML = '<p>Esta página solo es accesible desde un iPhone 13 Pro Max.</p>';
     } else {
@@ -72,7 +74,7 @@
         var dineroActual = parseFloat(spanDineroActual.textContent);
         var numeroRestar = parseFloat(inputResta.value);
 
-        errorMessage.textContent = ''; 
+        errorMessage.textContent = ''; // Limpiar mensaje de error
 
         if (isNaN(numeroRestar) || inputResta.value === '') {
           errorMessage.textContent = 'Por favor ingrese un número válido.';
