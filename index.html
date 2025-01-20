@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gastos</title>
+</head>
+<body>
+    <style>
+    @media (min-width: 431px) and (max-width: 932px) {
+        body {
+            font-size: 18px;
+            padding: 20px;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+    }
+    }
+    </style>
+
+    <form>
+        <p>Dinero actual: <span id="dinero-actual">100</span></p>
+        <input type="number" id="resta" placeholder="Número para restar sumando" />
+
+        <button id="btn-restar">Restar</button>
+
+        <p>Resultado: <span id="resultado"></span></p>
+    </form>
+  <script>
+
+    var spanDineroActual = document.getElementById('dinero-actual');
+    var inputResta = document.getElementById('resta');
+    var btnRestar = document.getElementById('btn-restar');
+    var spanResultado = document.getElementById('resultado');
+
+    btnRestar.addEventListener('click', () => {
+
+        var dineroActual = parseFloat(spanDineroActual.textContent);
+        var numeroRestar = parseFloat(inputResta.value);
+
+      if (isNaN(numeroRestar)) {
+        spanResultado.textContent = 'Número mal ponido titi.';
+        return;
+      }
+
+      var resultado = dineroActual - numeroRestar;
+
+      spanResultado.textContent = resultado;
+      spanDineroActual.textContent = resultado;
+    });
+
+  </script>
+</body>
+</html>
