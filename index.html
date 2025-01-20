@@ -2,19 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Gastos</title>
-</head>
-<body>
-    <style>
-    @media (min-width: 431px) and (max-width: 932px) {
-        body {
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Restar</title>
+  <style>
+    body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
+      padding: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      min-height: 95.5vh;
       background-color: #f0f0f0;
     }
 
@@ -34,7 +32,7 @@
     }
 
     input[type="number"] {
-      width: 100%;
+      width: 320px;
       padding: 15px;
       font-size: 1.2rem;
       border: 1px solid #ccc;
@@ -62,31 +60,49 @@
       font-weight: bold;
       color: #333;
     }
+
+    @media (min-width: 768px) {
+      p {
+        font-size: 1.5rem;
+      }
+
+      input[type="number"] {
+        font-size: 1.4rem;
+        padding: 20px;
+      }
+
+      button {
+        font-size: 1.4rem;
+        padding: 20px;
+      }
+
+      #resultado {
+        font-size: 1.8rem;
+      }
     }
-    </style>
+  </style>
+</head>
+<body>
 
-    <form>
-        <p>Dinero actual: <span id="dinero-actual">100</span></p>
-        <input type="number" id="resta" placeholder="Número para restar sumando" />
+  <form>
+    <p>Dinero actual: <span id="dinero-actual">100</span></p>
+    <input type="number" id="resta" placeholder="Número para restar" />
+    <button type="button" id="btn-restar">Restar</button>
+    <p>Resultado: <span id="resultado"></span></p>
+  </form>
 
-        <button id="btn-restar">Restar</button>
-
-        <p>Resultado: <span id="resultado"></span></p>
-    </form>
   <script>
-
     var spanDineroActual = document.getElementById('dinero-actual');
     var inputResta = document.getElementById('resta');
     var btnRestar = document.getElementById('btn-restar');
     var spanResultado = document.getElementById('resultado');
 
     btnRestar.addEventListener('click', () => {
-
-        var dineroActual = parseFloat(spanDineroActual.textContent);
-        var numeroRestar = parseFloat(inputResta.value);
+      var dineroActual = parseFloat(spanDineroActual.textContent);
+      var numeroRestar = parseFloat(inputResta.value);
 
       if (isNaN(numeroRestar)) {
-        spanResultado.textContent = 'Número mal ponido titi.';
+        spanResultado.textContent = 'Por favor, ingresa un número válido.';
         return;
       }
 
@@ -95,7 +111,7 @@
       spanResultado.textContent = resultado;
       spanDineroActual.textContent = resultado;
     });
-
   </script>
+
 </body>
 </html>
