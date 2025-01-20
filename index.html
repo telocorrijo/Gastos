@@ -6,20 +6,24 @@
   <title>Formulario de Restar</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 95.5vh;
-      background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-image: url(jimin);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center; 
+        margin: 0;
     }
 
     form {
       background: white;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 10px 10px 10px rgb(0, 0, 0);
       padding: 20px;
       width: 90%;
       max-width: 400px;
@@ -59,6 +63,9 @@
       font-size: 1.5rem;
       font-weight: bold;
       color: #333;
+      width: 320px;
+      height: 30px;
+      background-color: #0056b3;
     }
 
     @media (min-width: 768px) {
@@ -102,7 +109,7 @@
       var numeroRestar = parseFloat(inputResta.value);
 
       if (isNaN(numeroRestar)) {
-        spanResultado.textContent = 'Por favor, ingresa un número válido.';
+        spanResultado.innerHTML = '<br>Número mal ponido titi.';
         return;
       }
 
