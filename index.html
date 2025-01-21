@@ -19,16 +19,20 @@
     }
     form {
       background-color: white;
-      padding: 20px;
-      margin: 10px;
+      padding: 20px 35px 20px 35px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       width: 300px;
       position: relative;
       z-index: 1;
     }
+    p {
+      font-size: 20px;
+      display: flex;
+      justify-content: center;
+    }
      button {
-      width: 100%;
+      width: 200px;
       padding: 10px;
       margin: 10px 0;
       border-radius: 4px;
@@ -39,7 +43,8 @@
       padding: 10px;
       margin: 10px 0;
       border-radius: 4px;
-      border: 1px solid #ccc;
+      border: 1px solid #000000;
+      color: black;
     }
     button {
       background-color: #0099ff;
@@ -49,10 +54,7 @@
     button:hover {
       background-color: #1178bd;
     }
-    p {
-      font-size: 16px;
-    }
-    #resultado {
+    #resultado-gastos {
       font-weight: bold;
     }
     .error {
@@ -64,13 +66,16 @@
     #secIngresos {
       display: none;
     }
+    #btn-restar {
+      width: 302px;
+    }
+    #btn-sumar {
+      width: 302px;
+    }
 
     @media only screen and (max-width: 500px) {
       body {
         background-color: #e0f7fa;
-      }
-      form {
-        width: 90%;
       }
     }
   </style>
@@ -79,7 +84,7 @@
 
   <section id="botones">
     
-    <button id="btnGastos">Gastos</button>
+    <button id="btnGastos">Gastos</button><br>
     
     <button id="btnIngresos">Ingresos</button>
 
@@ -92,7 +97,7 @@
       <input type="number" id="resta" placeholder="Número para restar" />
       <button type="button" id="btn-restar">Restar</button>
       <p>Resultado: <span id="resultado-gastos"></span></p>
-      <p id="error-message-gastos" id="error-gastos"></p>
+      <p id="error-message-gastos" class="error"></p>
     </form>
   </section>
 
@@ -101,42 +106,72 @@
     <form>
       <p>Dinero actual: <span id="dinero-actual-ingresos">100</span></p>
       <input type="number" id="suma" placeholder="Número para sumar" />
-      <button type="button" id="btn-suma">Sumar</button>
+      <button type="button" id="btn-sumar">Sumar</button>
       <p>Resultado: <span id="resultado-ingresos"></span></p>
-      <p id="error-message-ingresos" id="error-ingresos"></p>
+      <p id="error-message-ingresos" class="error"></p>
     </form>
   </section>
   
-
   <script>
+
     var spanDineroActualGastos = document.getElementById('dinero-actual-gastos');
     var inputResta = document.getElementById('resta');
     var btnRestar = document.getElementById('btn-restar');
     var spanResultadoGastos = document.getElementById('resultado-gastos');
     var errorMessageGastos = document.getElementById('error-message-gastos');
-
-    document.getElementById('btnGastos').addEventListener('click', () =>{
+  
+      document.getElementById('btnGastos').addEventListener('click', () => {
       document.getElementById('secGastos').style.display = "block";
       document.getElementById('botones').style.display = "none";
     });
-
-
+  
     btnRestar.addEventListener('click', () => {
-      var dineroActual = parseFloat(spanDineroActualGastos.textContent);
+      var dineroActualGastos = parseFloat(spanDineroActualGastos.textContent);
       var numeroRestar = parseFloat(inputResta.value);
-
+  
       errorMessageGastos.textContent = '';
       if (isNaN(numeroRestar) || inputResta.value === '') {
-        errorMessageGastos.textContent = 'Número mal ponido Titi.';
+        errorMessageGastos.textContent = 'Número inválido.';
         return;
       }
-      
-      var resultado = dineroActual - numeroRestar;
-
-      spanResultadoGastos.textContent = resultado;
-      spanDineroActualGastos.textContent = resultado;
+  
+      if (dineroActualGastos - numeroRestar < 0) {
+        errorMessageGastos.textContent = 'El saldo no puede ser negativo.';
+        return;
+      }
+  
+      var resultadoGastos = dineroActualGastos - numeroRestar;
+  
+      spanResultadoGastos.textContent = resultadoGastos;
+      spanDineroActualGastos.textContent = resultadoGastos;
     });
-  </script>
-
+  
+    var spanDineroActualIngresos = document.getElementById('dinero-actual-ingresos');
+    var inputSuma = document.getElementById('suma');
+    var btnSumar = document.getElementById('btn-sumar');
+    var spanResultadoIngresos = document.getElementById('resultado-ingresos');
+    var errorMessageIngresos = document.getElementById('error-message-ingresos');
+  
+      document.getElementById('btnIngresos').addEventListener('click', () => {
+      document.getElementById('secIngresos').style.display = "block";
+      document.getElementById('botones').style.display = "none";
+    });
+  
+    btnSumar.addEventListener('click', () => {
+      var dineroActualIngresos = parseFloat(spanDineroActualIngresos.textContent);
+      var numeroSumar = parseFloat(inputSuma.value);
+  
+      errorMessageIngresos.textContent = '';
+      if (isNaN(numeroSumar) || inputSuma.value === '') {
+        errorMessageIngresos.textContent = 'Número inválido.';
+        return;
+      }
+  
+      var resultadoIngresos = dineroActualIngresos + numeroSumar;
+  
+      spanResultadoIngresos.textContent = resultadoIngresos;
+      spanDineroActualIngresos.textContent = resultadoIngresos;
+    });
+  </script>  
 </body>
 </html>
