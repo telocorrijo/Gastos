@@ -32,7 +32,8 @@
       justify-content: center;
     }
      button {
-      width: 200px;
+      width: 250px;
+      height: 40px;
       padding: 10px;
       margin: 10px 0;
       border-radius: 4px;
@@ -131,12 +132,12 @@
   
       errorMessageGastos.textContent = '';
       if (isNaN(numeroRestar) || inputResta.value === '') {
-        errorMessageGastos.textContent = 'Número inválido.';
+        errorMessageGastos.textContent = 'Número mal ponido Titi.';
         return;
       }
   
       if (dineroActualGastos - numeroRestar < 0) {
-        errorMessageGastos.textContent = 'El saldo no puede ser negativo.';
+        errorMessageGastos.textContent = 'El número no puede ser negativo titi.';
         return;
       }
   
@@ -163,7 +164,7 @@
   
       errorMessageIngresos.textContent = '';
       if (isNaN(numeroSumar) || inputSuma.value === '') {
-        errorMessageIngresos.textContent = 'Número inválido.';
+        errorMessageIngresos.textContent = 'Número mal ponido.';
         return;
       }
   
@@ -172,6 +173,56 @@
       spanResultadoIngresos.textContent = resultadoIngresos;
       spanDineroActualIngresos.textContent = resultadoIngresos;
     });
+
+
+    function dineroActual () {
+      const dineroGuardado = localStorage.getItem("saldo");
+      return dineroGuardado ? parseFloat(dineroGuardado) : 100; 
+    }
+
+    function guardarDinero(saldo) {
+      localStorage.setItem("saldo", saldo);
+    }
+
+     let saldo = dineroActual ();
+
+    document.getElementById("dinero-actual-gastos").textContent = saldo;
+    document.getElementById("dinero-actual-ingresos").textContent = saldo;
+
+    document.getElementById("btn-restar").addEventListener("click", () => {
+      const inputResta = parseFloat(document.getElementById("resta").value);
+      const errorMessageGastos = document.getElementById("error-message-gastos");
+
+      errorMessageGastos.textContent = "";
+
+      if (isNaN(inputResta)) {
+        errorMessageGastos.textContent = "Número mal ponido Titi.";
+        return;
+      }
+
+      saldo -= inputResta;
+      guardarDinero(saldo);
+      document.getElementById("dinero-actual-gastos").textContent = saldo;
+      document.getElementById("resultado-gastos").textContent = saldo;
+    });
+
+    document.getElementById("btn-sumar").addEventListener("click", () => {
+      const inputSuma = parseFloat(document.getElementById("suma").value);
+      const errorMessageIngresos = document.getElementById("error-message-ingresos");
+
+      errorMessageIngresos.textContent = "";
+
+      if (isNaN(inputSuma)) {
+        errorMessageIngresos.textContent = "Número mal ponido Titi.";
+        return;
+      }
+
+      saldo += inputSuma;
+      guardarDinero(saldo); 
+      document.getElementById("dinero-actual-ingresos").textContent = saldo;
+      document.getElementById("resultado-ingresos").textContent = saldo;
+    });
+
   </script>  
 </body>
 </html>
