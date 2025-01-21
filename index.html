@@ -7,7 +7,11 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
       background-color: #f4f4f9;
     }
     form {
@@ -16,7 +20,6 @@
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       width: 300px;
-      margin: auto;
     }
     input, button {
       width: 100%;
@@ -42,6 +45,15 @@
     .error {
       color: red;
     }
+
+    @media only screen and (max-width: 500px) {
+      body {
+        background-color: #e0f7fa;
+      }
+      form {
+        width: 90%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -55,38 +67,28 @@
   </form>
 
   <script>
-    // Función para verificar si el dispositivo es el iPhone 13 Pro Max
-    function esIphone13ProMax() {
-      return (screen.width === 400 && 500 && screen.height === 900 && 1000); // Resolución específica
-    }
+    var spanDineroActual = document.getElementById('dinero-actual');
+    var inputResta = document.getElementById('resta');
+    var btnRestar = document.getElementById('btn-restar');
+    var spanResultado = document.getElementById('resultado');
+    var errorMessage = document.getElementById('error-message');
 
-    // Si no es iPhone 13 Pro Max, redirige a otra página o muestra un mensaje
-    if (!esIphone13ProMax()) {
-      document.body.innerHTML = '<p>Esta página solo es accesible desde un iPhone 13 Pro Max.</p>';
-    } else {
-      var spanDineroActual = document.getElementById('dinero-actual');
-      var inputResta = document.getElementById('resta');
-      var btnRestar = document.getElementById('btn-restar');
-      var spanResultado = document.getElementById('resultado');
-      var errorMessage = document.getElementById('error-message');
+    btnRestar.addEventListener('click', () => {
+      var dineroActual = parseFloat(spanDineroActual.textContent);
+      var numeroRestar = parseFloat(inputResta.value);
 
-      btnRestar.addEventListener('click', () => {
-        var dineroActual = parseFloat(spanDineroActual.textContent);
-        var numeroRestar = parseFloat(inputResta.value);
+      errorMessage.textContent = ''; // Limpiar mensaje de error
 
-        errorMessage.textContent = ''; // Limpiar mensaje de error
+      if (isNaN(numeroRestar) || inputResta.value === '') {
+        errorMessage.textContent = 'Por favor ingrese un número válido.';
+        return;
+      }
 
-        if (isNaN(numeroRestar) || inputResta.value === '') {
-          errorMessage.textContent = 'Por favor ingrese un número válido.';
-          return;
-        }
+      var resultado = dineroActual - numeroRestar;
 
-        var resultado = dineroActual - numeroRestar;
-
-        spanResultado.textContent = resultado;
-        spanDineroActual.textContent = resultado;
-      });
-    }
+      spanResultado.textContent = resultado;
+      spanDineroActual.textContent = resultado;
+    });
   </script>
 
 </body>
