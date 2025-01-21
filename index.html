@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario de Restar</title>
   <style>
     body {
@@ -13,6 +12,9 @@
       height: 100vh;
       margin: 0;
       background-color: #f4f4f9;
+      background-image: url(jimin);
+      background-repeat: no-repeat;
+      background-size: cover;
     }
     form {
       background-color: white;
@@ -77,7 +79,7 @@
       var dineroActual = parseFloat(spanDineroActual.textContent);
       var numeroRestar = parseFloat(inputResta.value);
 
-      errorMessage.textContent = ''; // Limpiar mensaje de error
+      errorMessage.textContent = ''; 
 
       if (isNaN(numeroRestar) || inputResta.value === '') {
         errorMessage.textContent = 'Por favor ingrese un número válido.';
