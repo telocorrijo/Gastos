@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario de Restar</title>
   <style>
-    body {
+ body {
       font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
@@ -32,7 +32,7 @@
       justify-content: center;
     }
      button {
-      width: 250px;
+      width: 302px;
       height: 40px;
       padding: 10px;
       margin: 10px 0;
@@ -73,118 +73,58 @@
     #btn-sumar {
       width: 302px;
     }
+    #reiniciar {
+      display: none;
+    }
 
     @media only screen and (max-width: 500px) {
       body {
         background-color: #e0f7fa;
       }
-    }
-  </style>
+    }  
+    </style>
 </head>
 <body>
 
   <section id="botones">
-    
     <button id="btnGastos">Gastos</button><br>
-    
     <button id="btnIngresos">Ingresos</button>
-
   </section>
-
 
   <section id="secGastos">  
     <form>
-      <p>Dinero actual: <span id="dinero-actual-gastos">100</span></p>
+      <p>Dinero actual: <span id="dinero-actual-gastos">1000</span></p>
       <input type="number" id="resta" placeholder="Número para restar" />
       <button type="button" id="btn-restar">Restar</button>
       <p>Resultado: <span id="resultado-gastos"></span></p>
       <p id="error-message-gastos" class="error"></p>
+      <button type="button" id="btn-reiniciar-gastos">Reiniciar</button>
     </form>
   </section>
 
-  
   <section id="secIngresos">  
     <form>
-      <p>Dinero actual: <span id="dinero-actual-ingresos">100</span></p>
+      <p>Dinero actual: <span id="dinero-actual-ingresos">1000</span></p>
       <input type="number" id="suma" placeholder="Número para sumar" />
       <button type="button" id="btn-sumar">Sumar</button>
       <p>Resultado: <span id="resultado-ingresos"></span></p>
       <p id="error-message-ingresos" class="error"></p>
+      <button type="button" id="btn-reiniciar-ingresos">Reiniciar</button>
     </form>
   </section>
-  
+
   <script>
 
-    var spanDineroActualGastos = document.getElementById('dinero-actual-gastos');
-    var inputResta = document.getElementById('resta');
-    var btnRestar = document.getElementById('btn-restar');
-    var spanResultadoGastos = document.getElementById('resultado-gastos');
-    var errorMessageGastos = document.getElementById('error-message-gastos');
-  
-      document.getElementById('btnGastos').addEventListener('click', () => {
-      document.getElementById('secGastos').style.display = "block";
-      document.getElementById('botones').style.display = "none";
-    });
-  
-    btnRestar.addEventListener('click', () => {
-      var dineroActualGastos = parseFloat(spanDineroActualGastos.textContent);
-      var numeroRestar = parseFloat(inputResta.value);
-  
-      errorMessageGastos.textContent = '';
-      if (isNaN(numeroRestar) || inputResta.value === '') {
-        errorMessageGastos.textContent = 'Número mal ponido Titi.';
-        return;
-      }
-  
-      if (dineroActualGastos - numeroRestar < 0) {
-        errorMessageGastos.textContent = 'El número no puede ser negativo titi.';
-        return;
-      }
-  
-      var resultadoGastos = dineroActualGastos - numeroRestar;
-  
-      spanResultadoGastos.textContent = resultadoGastos;
-      spanDineroActualGastos.textContent = resultadoGastos;
-    });
-  
-    var spanDineroActualIngresos = document.getElementById('dinero-actual-ingresos');
-    var inputSuma = document.getElementById('suma');
-    var btnSumar = document.getElementById('btn-sumar');
-    var spanResultadoIngresos = document.getElementById('resultado-ingresos');
-    var errorMessageIngresos = document.getElementById('error-message-ingresos');
-  
-      document.getElementById('btnIngresos').addEventListener('click', () => {
-      document.getElementById('secIngresos').style.display = "block";
-      document.getElementById('botones').style.display = "none";
-    });
-  
-    btnSumar.addEventListener('click', () => {
-      var dineroActualIngresos = parseFloat(spanDineroActualIngresos.textContent);
-      var numeroSumar = parseFloat(inputSuma.value);
-  
-      errorMessageIngresos.textContent = '';
-      if (isNaN(numeroSumar) || inputSuma.value === '') {
-        errorMessageIngresos.textContent = 'Número mal ponido.';
-        return;
-      }
-  
-      var resultadoIngresos = dineroActualIngresos + numeroSumar;
-  
-      spanResultadoIngresos.textContent = resultadoIngresos;
-      spanDineroActualIngresos.textContent = resultadoIngresos;
-    });
-
-
-    function dineroActual () {
+    function dineroActual() {
       const dineroGuardado = localStorage.getItem("saldo");
-      return dineroGuardado ? parseFloat(dineroGuardado) : 100; 
+      return dineroGuardado ? parseFloat(dineroGuardado) : 1000;
     }
 
     function guardarDinero(saldo) {
       localStorage.setItem("saldo", saldo);
     }
 
-     let saldo = dineroActual ();
+    let saldo = dineroActual();
 
     document.getElementById("dinero-actual-gastos").textContent = saldo;
     document.getElementById("dinero-actual-ingresos").textContent = saldo;
@@ -197,6 +137,11 @@
 
       if (isNaN(inputResta)) {
         errorMessageGastos.textContent = "Número mal ponido Titi.";
+        return;
+      }
+
+      if (saldo - inputResta < 0) {
+        errorMessageGastos.textContent = "El número no puede ser negativo Titi.";
         return;
       }
 
@@ -218,11 +163,32 @@
       }
 
       saldo += inputSuma;
-      guardarDinero(saldo); 
+      guardarDinero(saldo);
       document.getElementById("dinero-actual-ingresos").textContent = saldo;
       document.getElementById("resultado-ingresos").textContent = saldo;
     });
 
-  </script>  
+    document.getElementById("btn-reiniciar-gastos").addEventListener("click", () => {
+      saldo = 1000;
+      guardarDinero(saldo);
+      location.reload();
+    });
+
+    document.getElementById("btn-reiniciar-ingresos").addEventListener("click", () => {
+      saldo = 1000;
+      guardarDinero(saldo);
+      location.reload(); 
+    });
+
+    document.getElementById("btnGastos").addEventListener("click", () => {
+      document.getElementById("secGastos").style.display = "block";
+      document.getElementById("botones").style.display = "none";
+    });
+
+    document.getElementById("btnIngresos").addEventListener("click", () => {
+      document.getElementById("secIngresos").style.display = "block";
+      document.getElementById("botones").style.display = "none";
+    });
+  </script>
 </body>
 </html>
